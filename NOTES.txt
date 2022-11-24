@@ -1,0 +1,13 @@
+1-Post model: 
+title
+postId
+content
+imgUrl
+createdDate
+userId
+nbLike
+liked
+
+2-router: home page is the page d'accueil.
+
+*modifier la methode onSubmit dans home-component.ts pour inserer un utlisateur souscrit à la newsletter dans la base

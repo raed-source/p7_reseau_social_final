@@ -1,0 +1,18 @@
+<!-- <div class="post-card" style="width: 25rem;">
+  <img [src]="post.imgUrl" class="card-img-top" [alt]="post.title">
+  <div class="card-body">
+    <h5 class="card-title">{{post.title}}</h5>
+    <p class="card-text">{{post.content}}
+    </p>
+    <p> <i class="avaliable">crée le:</i> {{post.dateCreate}}</p>
+    <p>{{post.dislike}} </p>
+    <button (click)="onViewPost()">VIEW</button>
+  </div>
+</div> -->
+
+<div class="post-card" [ngClass]="{ liked: buttonText === 'DisLike' }">
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.content }}</p>
+  <p>{{ post.id }}</p>
+  <button (click)="onViewPost(post.id)">View</button>
+</div>

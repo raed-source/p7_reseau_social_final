@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  letter-spacing: 0.1em;
+  margin: 0;
+  white-space: pre-line;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+a {
+  margin: 0 10px;
+  color: #333;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.active {
+  color: #666;
+  text-decoration: underline;
+}
+/*# sourceMappingURL=styles.css.map */

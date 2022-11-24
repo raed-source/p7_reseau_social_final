@@ -1,0 +1,41 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<div class="form-card">
+  <h2>NOUVEAU POST</h2>
+
+  <form [formGroup]="postForm">
+    <div class="form-group">
+      <label for="title">Titre</label>
+      <input id="title" type="text" formControlName="title" />
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea id="content" type="text" formControlName="content" rows="4">
+      </textarea>
+    </div>
+    <div class="form-group">
+      <label for="imgUrl">URL de l'image</label>
+      <input id="imgUrl" type="text" formControlName="imgUrl" />
+    </div>
+    <div class="form-group">
+      <label for="location">Lieu</label>
+      <input id="location" type="text" formControlName="location" />
+    </div>
+    <div class="action-buttons">
+      <button
+        type="submit"
+        [disabled]="postForm.invalid"
+        (click)="onSubmitForm()"
+      >
+        Enregistrer
+      </button>
+    </div>
+  </form>
+</div>
+<div class="post-card" *ngIf="postPreview$ | async as post">
+  <h2>{{ post.title | uppercase }}</h2>
+  <p>Mis en ligne {{ post.dateCreate | date: "à HH:mm, le d MMMM yyyy" }}</p>
+  <img [src]="post.imgUrl" [alt]="post.title" />
+  <p>{{ post.content }}</p>
+  <p *ngIf="post.location">Photo prise à {{ post.location }}</p>
+</div>

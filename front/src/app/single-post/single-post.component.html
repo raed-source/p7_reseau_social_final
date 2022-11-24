@@ -1,0 +1,18 @@
+<div
+  class="post-card"
+  *ngIf="post$ | async as post"
+  [ngClass]="{ liked: buttonText === 'DisLike' }"
+>
+  <h2>{{ post.title | uppercase }}</h2>
+  <p>{{ post.content }}</p>
+  <button><a href="" routerLink="/posts">Back</a></button>
+
+  <img *ngif="post.imgUrl" [src]="post.imgUrl" [alt]="post.title" />
+  <p>{{ post.dislike }}</p>
+  <p>{{ post.dateCreate | date: "à HH:mm, le d MMMM yyyy" }}</p>
+  <button (click)="liked(post.id)">{{ buttonText }}</button>
+  <span>{{ post.like }}</span>
+  <p *ngIf="post.location">
+    <span>{{ post.location }}</span>
+  </p>
+</div>
