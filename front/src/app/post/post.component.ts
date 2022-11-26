@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {Post} from '../models/post-model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../services/post.service';
 @Component({
   selector: 'app-post',
@@ -12,9 +12,12 @@ export class PostComponent implements OnInit {
 
   buttonText!:string;
   buttonDelete!:string;
+
+  
   constructor(private postService: PostService,
-    private router: Router) {}
+    private router: Router, private route:ActivatedRoute) {}
   ngOnInit(): void {
+    const postId = +this.route.snapshot.params['id'];    
 
     this.buttonText='Like';
     this.buttonDelete='Delete';
@@ -22,19 +25,23 @@ export class PostComponent implements OnInit {
 
   // ***********************************************************************************
   
-  // liked(){
-  //   if(this.buttonText==='DisLike'){
-  //     this.postService.likedPostById(this.post.id, 'DisLike');
-  //     this.buttonText='Like';
-  //   }else{
-  //     this.postService.likedPostById(this.post.id, 'Like');
-  //     this.buttonText='DisLike';
+  liked(){
+    if(this.buttonText==='DisLike'){
+      this.postService.likedPostById(this.post._id, 'DisLike');
+      this.buttonText='Like';
+    }else{
+      this.postService.likedPostById(this.post._id, 'Like');
+      this.buttonText='DisLike';
 
-  //   }
-  // }
-  // `posts/${this.post.id}`
-  onViewPost(id:number) {
+    }
+  }
+
+
+
+  onViewPost() {
     console.log(this.post);
-    this.router.navigate(['post', Number(id)]);
+
+    this.router.navigateByUrl(`posts/${this.post._id}`);
+    
 }
 }

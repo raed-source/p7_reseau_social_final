@@ -13,7 +13,6 @@ export class PostListComponent implements OnInit {
   posts$!: Observable<Post[]>;
   loading!: boolean;
   errorMsg!: string;
-  // myPosts$!:Observable<Post[]>;
   constructor(private postService:PostService, private router:Router) { }
 
   ngOnInit(): void {
@@ -30,13 +29,11 @@ export class PostListComponent implements OnInit {
       })
     );
     this.postService.getAllPosts();
- 
         }
-        onViewPost(id:number) {
-          
-           
-              this.router.navigate(['post', Number(id)]);
-          }
+
+  //  onViewPost(id:number) {           
+  //   this.router.navigate(['post', Number(id)]);
+  //         }
 
 }
 

@@ -13,6 +13,6 @@
 <div class="post-card" [ngClass]="{ liked: buttonText === 'DisLike' }">
   <h2>{{ post.title }}</h2>
   <p>{{ post.content }}</p>
-  <p>{{ post.id }}</p>
-  <button (click)="onViewPost(post.id)">View</button>
+  <p>{{ post._id }}</p>
+  <button (click)="onViewPost()">View</button>
 </div>

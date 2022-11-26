@@ -14,8 +14,7 @@ export class PostService{
   // ******************************************************************
 
 getAllPosts() {
-  let token= this.auth.getToken();
-  
+  let token= this.auth.getToken(); 
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
 });
@@ -28,7 +27,7 @@ getAllPosts() {
   ).subscribe();
 }
 // ********************************************************************
-getPostById(id: number) {
+getPostById(id:any) {
   let token= this.auth.getToken();
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
@@ -86,12 +85,31 @@ disLikedById(id: number, dislikeType:string): void {
         );
       }
       // ************************************************
-      deletePost(id: string) {
+      deletePost(id: number) {
         return this.http.delete<{ message: string }>('http://localhost:3000/api/posts/' + id).pipe(
           catchError(error => throwError(error.error.message))
         );
       }
-      
+      // **************************************************************
+       modifyPost(id: number, post: Post, imgUrl: string | File) {
+        let token= this.auth.getToken();
+        const headers = new HttpHeaders({
+           'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        });
+    if (typeof imgUrl === 'string') {
+      return this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, post,{headers:headers}).pipe(
+        catchError(error => throwError(error.error.message))
+      );
+    } else {
+      const formData = new FormData();
+      formData.append('post', JSON.stringify(post));
+      formData.append('imgUrl', imgUrl);
+      return this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, formData,{headers:headers}).pipe(
+        catchError(error => throwError(error.error.message))
+      );
+    }
+  }
       
       // addPost(formValue:{ title: string, content: string, imgUrl: string, location?: string }):Observable<Post>{
         //   return this.getAllPosts().pipe(

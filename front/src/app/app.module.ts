@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewPostComponent } from './new-post/new-post.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AuthGuard } from './services/auth-guard.service';
+import { ModifyPostComponent } from './modify-post/modify-post.component';
 
 
 
@@ -31,6 +32,7 @@ import { AuthGuard } from './services/auth-guard.service';
     PostListComponent,
     SinglePostComponent,
     NewPostComponent,
+    ModifyPostComponent,
     // Post
   ],
   imports: [

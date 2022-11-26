@@ -19,8 +19,13 @@ export class NewPostComponent implements OnInit {
   mode!: string;
   post!: Post;
   errorMsg!: string;
+  imagePreview!: any;
+
   constructor(private formBuilder: FormBuilder,
-    private postService:PostService, private router:Router, private route:ActivatedRoute, private auth:AuthService) { }
+    private postService:PostService, 
+    private router:Router, 
+    private route:ActivatedRoute, 
+    private auth:AuthService) {this.initEmptyForm()  }
 
 
 // *****************************************************
@@ -44,7 +49,7 @@ export class NewPostComponent implements OnInit {
 //       }))
 //   );
 // }
-// ********************************************************************************
+// ************************************************************************************
 
 
 this.loading = true;
@@ -63,6 +68,7 @@ this.route.params.pipe(
   tap(post => {
     if (post) {
       this.post = post;
+      this.initModifyForm(post);
       this.loading = false;
     }
   }),
@@ -79,18 +85,28 @@ this.postForm = this.formBuilder.group({
 });
 
 }
+initModifyForm(post: Post) {
+  this.postForm = this.formBuilder.group({
+    title: [post.title, Validators.required],
+    content: [post.content, Validators.required],
+    imgUrl: [post.imgUrl, Validators.required],
+    location:[post.location]
+  });
+
+  this.imagePreview = this.post.imgUrl;
+}
 
 onSubmitForm() {
-  this.mode="new";
+  
   this.loading = true;
   const newPost= new Post();
   newPost.title=this.postForm.get('title')!.value;
   newPost.content=this.postForm.get('content')!.value;
   newPost.imgUrl=this.postForm.get('imgUrl')!.value;
   newPost.userId = this.auth.getUserId();
-  // console.log(newPost);
-  if (this.mode === 'new') {
-    console.log(newPost);
+  console.log(newPost);
+  if (this.mode === 'new') 
+  {
     this.postService.createPost(newPost).pipe(
       tap(({ message }) => {
         console.log(message);
@@ -104,23 +120,39 @@ onSubmitForm() {
         return EMPTY;
       })
     ).subscribe();
+    }
+    else if (this.mode === 'edit')
+    {
+      this.postService.modifyPost(this.post._id, newPost, this.postForm.get('imgUrl')!.value).pipe(
+        tap(({ message }) => {
+          console.log(message);
+          this.loading = false;
+          this.router.navigate(['/posts']);
+        }),
+        catchError(error => {
+          console.error(error);
+          this.loading = false;
+          this.errorMsg = error.message;
+          return EMPTY;
+        })
+      ).subscribe();
+    }
+
+    // console.log(this.postForm.value);
+    // // this.postService.addPost(this.postForm.value);
+    // // this.router.navigateByUrl('/posts');
+    // const newPost= new Post;
+    // newPost.title=this.postForm.get('title')!.value;
+    // newPost.content=this.postForm.get('content')!.value;
+    // newPost.location=this.postForm.get('title')!.value;
+    // newPost.imgUrl=this.postForm.get('imgUrl')!.value;
+
+    // this.postService.createPost(newPost,this)
+
+    // this.postService.addPost(this.postForm.value).pipe(
+    //   tap(()=>this.router.navigateByUrl('/posts'))
+    // ).subscribe();
 
 
-
-  // console.log(this.postForm.value);
-  // // this.postService.addPost(this.postForm.value);
-  // // this.router.navigateByUrl('/posts');
-  // const newPost= new Post;
-  // newPost.title=this.postForm.get('title')!.value;
-  // newPost.content=this.postForm.get('content')!.value;
-  // newPost.location=this.postForm.get('title')!.value;
-  // newPost.imgUrl=this.postForm.get('imgUrl')!.value;
-
-  // this.postService.createPost(newPost,this)
-
-  // this.postService.addPost(this.postForm.value).pipe(
-  //   tap(()=>this.router.navigateByUrl('/posts'))
-  // ).subscribe();
 }
-
-}}
+}

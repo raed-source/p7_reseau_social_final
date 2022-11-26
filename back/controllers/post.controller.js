@@ -50,29 +50,29 @@ exports.createPost = (req, res, next) => {
 
 
 
-// exports.modifyPost = (req, res, next) => {
-//     const post = new Post({
-//         _id: req.params.id,
-//         title: req.body.title,
-//         description: req.body.description,
-//         imgUrl: req.body.imgUrl,
-//         price: req.body.price,
-//         userId: req.body.userId
-//     });
-//     Post.updateOne({ _id: req.params.id }, post).then(
-//         () => {
-//             res.status(201).json({
-//                 message: 'Post updated successfully!'
-//             });
-//         }
-//     ).catch(
-//         (error) => {
-//             res.status(400).json({
-//                 error: error
-//             });
-//         }
-//     );
-// };
+exports.modifyPost = (req, res, next) => {
+    const post = new Post({
+        _id: req.params.id,
+        title: req.body.title,
+        description: req.body.description,
+        imgUrl: req.body.imgUrl,
+        price: req.body.price,
+        userId: req.body.userId
+    });
+    Post.updateOne({ _id: req.params.id }, post).then(
+        () => {
+            res.status(201).json({
+                message: 'Post updated successfully!'
+            });
+        }
+    ).catch(
+        (error) => {
+            res.status(400).json({
+                error: error
+            });
+        }
+    );
+};
 // 
 exports.deletePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id })
