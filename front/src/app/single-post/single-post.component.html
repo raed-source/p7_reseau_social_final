@@ -1,20 +1,36 @@
+<button mat-raised-button><a routerLink="/posts">Back</a></button>
 <div
   class="post-card"
   *ngIf="post$ | async as post"
   [ngClass]="{ liked: buttonText === 'DisLike' }"
 >
-  <h2>{{ post.title | uppercase }}</h2>
-  <p>{{ post.content }}</p>
-  <button><a routerLink="/posts">Back</a></button>
-
   <img [src]="post.imgUrl" [alt]="post.title" />
-  <p>{{ post.dislike }}</p>
-  <p>{{ post.dateCreate | date: "à HH:mm, le d MMMM yyyy" }}</p>
-  <button (click)="liked(post._id)">{{ buttonText }}</button>
-  <span>{{ post.like }}</span>
-  <p *ngIf="post.location">
+  <h2>{{ post.title | uppercase }}</h2>
+  <p class="card-text">{{ post.content }}</p>
+  <!-- <p>{{ post.dislike }}</p> -->
+  <p class="card-text">
+    {{ post.dateCreate | date: "à HH:mm, le d MMMM yyyy" }}
+  </p>
+  <p class="card-text">
     <span>{{ post.location }}</span>
   </p>
-  <button (click)="onModify()" *ngIf="userId === post.userId">MODIFY</button>
-  <button (click)="onDelete()" *ngIf="userId === post.userId">DELETE</button>
+  <button (click)="liked(post._id)">{{ buttonText }}</button>
+  <span>{{ post.like }}</span>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onModify()"
+    *ngIf="userId === post.userId"
+  >
+    MODIFY
+  </button>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="onDelete()"
+    *ngIf="userId === post.userId"
+  >
+    DELETE
+  </button>
 </div>

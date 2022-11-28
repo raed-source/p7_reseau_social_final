@@ -86,7 +86,12 @@ disLikedById(id: number, dislikeType:string): void {
       }
       // ************************************************
       deletePost(id: number) {
-        return this.http.delete<{ message: string }>('http://localhost:3000/api/posts/' + id).pipe(
+        let token= this.auth.getToken();
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        });
+        return this.http.delete<{ message: string }>('http://localhost:3000/api/posts/' + id,{headers:headers}).pipe(
           catchError(error => throwError(error.error.message))
         );
       }

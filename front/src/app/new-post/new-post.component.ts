@@ -103,6 +103,9 @@ onSubmitForm() {
   newPost.title=this.postForm.get('title')!.value;
   newPost.content=this.postForm.get('content')!.value;
   newPost.imgUrl=this.postForm.get('imgUrl')!.value;
+  newPost.location=this.postForm.get('location')!.value;
+
+  // newPost.dateCreate=this.postForm.get('dateCreat')!.value;
   newPost.userId = this.auth.getUserId();
   console.log(newPost);
   if (this.mode === 'new') 
