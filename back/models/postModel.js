@@ -8,10 +8,13 @@ const postSchema = mongoose.Schema({
   content: { type: String, required: true },
   imgUrl: { type: String, required: true },
   dateCreate: { type: Date },
-  like: { type: String },
-  dislike: { type: String },
+  // like: { type: String },
+  // dislike: { type: String },
   location: { type: String },
-  // likes:{ type:Number}
+  likes: { type: Number },
+  dislikes: { type: Number },
+  usersLiked: { type: [String] },
+  usersDisliked: { type: [String] },
 });
 
 module.exports = mongoose.model("Post", postSchema);

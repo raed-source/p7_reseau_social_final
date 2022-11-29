@@ -125,3 +125,44 @@ exports.modifyPost = (req, res, next) => {
         }
       );
   };
+
+//   ***********like methode*********************
+exports.likePost = (req, res, next) => {
+    Post.findOne({ _id: req.params.id })
+      .then((post) => {
+        if (req.body.like === 1) {
+          post.usersLiked.push(req.body.userId);
+        } else if (req.body.like === -1) {
+          post.usersDisliked.push(req.body.userId);
+        } else if (req.body.like === 0) {
+       
+          if (post.usersLiked.includes(req.body.userId) === true) {
+            const userIdIndex = post.usersLiked.indexOf(req.body.userId);
+            post.usersLiked.splice(userIdIndex, 1);
+          } else {
+            const userIdIndexDisliked = post.usersDisliked.indexOf(req.body.userId);
+            post.usersDisliked.splice(userIdIndexDisliked, 1);
+          }
+        }
+        post.likes = post.usersLiked.length;
+        post.dislikes = post.usersDisliked.length;
+        Post.updateOne(
+          { _id: req.params.id },
+          {
+            likes: post.likes,
+            dislikes: post.dislikes,
+            usersLiked: post.usersLiked,
+            usersDisliked: post.usersDisliked,
+          }
+        )
+          .then(() => res.status(200).json({ message: "Vous venez de voter" }))
+          .catch((error) => {
+            if (error) {
+              console.log(error);
+            }
+          });
+      })
+      // si erreur envoit un status 404 Not Found et l'erreur en json
+      .catch((error) => res.status(404).json({ error }));
+  }
+  

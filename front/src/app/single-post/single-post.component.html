@@ -1,36 +1,35 @@
-<button mat-raised-button><a routerLink="/posts">Back</a></button>
-<div
-  class="post-card"
-  *ngIf="post$ | async as post"
-  [ngClass]="{ liked: buttonText === 'DisLike' }"
->
+<button><a routerLink="/posts">Back</a></button>
+<div class="post-card" *ngIf="post$ | async as post" [ngClass]="{ liked: buttonText === 'DisLike' }">
   <img [src]="post.imgUrl" [alt]="post.title" />
   <h2>{{ post.title | uppercase }}</h2>
   <p class="card-text">{{ post.content }}</p>
   <!-- <p>{{ post.dislike }}</p> -->
-  <p class="card-text">
-    {{ post.dateCreate | date: "à HH:mm, le d MMMM yyyy" }}
-  </p>
-  <p class="card-text">
+  <p>{{ post.dateCreate | date: "à HH:mm, le d MMMM yyyy" }}</p>
+
+  <span>{{ post.likes }}</span>
+  <p *ngIf="post.location">
     <span>{{ post.location }}</span>
   </p>
-  <button (click)="liked(post._id)">{{ buttonText }}</button>
-  <span>{{ post.like }}</span>
-
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onModify()"
-    *ngIf="userId === post.userId"
-  >
-    MODIFY
-  </button>
-  <button
-    mat-raised-button
-    color="warn"
-    (click)="onDelete()"
-    *ngIf="userId === post.userId"
-  >
-    DELETE
-  </button>
+  <p>{{ post.dateCreate }}</p>
+  <!-- -----------like button--------------- -->
+  <div class="like-buttons" *ngIf="!likePending">
+    <div class="likes">
+      <i [ngClass]="{ 'fas liked': liked, far: !liked, disabled: disliked }" class="like fa-thumbs-up fa-lg"
+        (click)="onLike()"></i>
+      <span>{{ post.likes }}</span>
+    </div>
+    <div class="dislikes">
+      <i [ngClass]="{
+          'fas disliked': disliked,
+          far: !disliked,
+          disabled: liked
+        }" class="dislike fa-thumbs-down fa-lg" (click)="onDislike()"></i>
+      <span>{{ post.dislikes }}</span>
+    </div>
+  </div>
+  <div class="like-pending" *ngIf="likePending">
+    <mat-spinner class="white-spinner"></mat-spinner>
+  </div>
+  <button (click)="onModify()" *ngIf="userId === post.userId">MODIFY</button>
+  <button (click)="onDelete()" *ngIf="userId === post.userId">DELETE</button>
 </div>

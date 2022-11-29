@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Post } from "../models/post-model";
-import { catchError, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
+import { catchError, map, mapTo, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
 import { AuthService } from "./auth.service";
 @Injectable({
   providedIn:'root'
 })
 export class PostService{
+
   constructor(private http:HttpClient, private auth:AuthService){}
   // posts:Post[]=[];
   posts$ = new Subject<Post[]>();
@@ -39,17 +40,45 @@ getPostById(id:any) {
   // return this.http.get<Post>(`http://localhost:3000/posts/${id}`)
 }
 // ************************************************************************
-likedPostById(id: number, likeType:string){
-//   const post = this.getPostById(id); // à remplacer par un Observable
-//  likeType==='Like'?post.like='Ok':post.like='';
-  return this.getPostById(id).pipe(
-    map(post=>({
-      ...post,
-      like:likeType==='Like'?'ok':''
-    })),
-    switchMap(updatePost=>this.http.put<Post>(`http://localhost:3000/posts/${id}`,updatePost))
-  )
+
+likePost(id: number, like: boolean) {
+  let token= this.auth.getToken();
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+  return this.http.post<{ message: string }>(
+    'http://localhost:3000/api/posts/' + id + '/like',
+    { userId: this.auth.getUserId(), like: like ? 1 : 0 },{ headers: headers}
+  ).pipe(
+    mapTo(like),
+    catchError(error => throwError(error.error.message))
+  );
 }
+dislikePost(id: number, dislike: boolean) {
+  let token= this.auth.getToken();
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+  return this.http.post<{ message: string }>(
+    'http://localhost:3000/api/posts/' + id + '/like',
+    { userId: this.auth.getUserId(), like: dislike ? -1 : 0 },{ headers: headers}
+  ).pipe(
+    mapTo(dislike),
+    catchError(error => throwError(error.error.message))
+  );
+}
+// }
+// likedPostById(id: number, likeType:string){
+// //   const post = this.getPostById(id); // à remplacer par un Observable
+// //  likeType==='Like'?post.like='Ok':post.like='';
+//   return this.getPostById(id).pipe(
+//     map(post=>({
+//       ...post,
+//       like:likeType==='Like'?'ok':''
+//     })),
+//     switchMap(updatePost=>this.http.put<Post>(`http://localhost:3000/posts/${id}`,updatePost))
+//   )
+// }
 // ********************************************************************
 
 disLikedById(id: number, dislikeType:string): void {

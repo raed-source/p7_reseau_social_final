@@ -19,22 +19,22 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     const postId = +this.route.snapshot.params['id'];    
 
-    this.buttonText='Like';
-    this.buttonDelete='Delete';
+    // this.buttonText='Like';
+    // this.buttonDelete='Delete';
   }
 
   // ***********************************************************************************
   
-  liked(){
-    if(this.buttonText==='DisLike'){
-      this.postService.likedPostById(this.post._id, 'DisLike');
-      this.buttonText='Like';
-    }else{
-      this.postService.likedPostById(this.post._id, 'Like');
-      this.buttonText='DisLike';
+  // liked(){
+  //   if(this.buttonText==='DisLike'){
+  //     this.postService.likedPostById(this.post._id, 'DisLike');
+  //     this.buttonText='Like';
+  //   }else{
+  //     this.postService.likedPostById(this.post._id, 'Like');
+  //     this.buttonText='DisLike';
 
-    }
-  }
+  //   }
+  // }
 
 
 

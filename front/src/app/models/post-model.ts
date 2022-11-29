@@ -5,9 +5,13 @@ title!: string;
 content!: string;
 imgUrl?:string
 dateCreate!: Date;
-like?: string;
-dislike?: string;
+// like?: string;
+// dislike?: string;
 location?:string;
-likes!:number;
+// likes!:number;
 comments?:[];
+likes!: number;
+dislikes!: number;
+usersLiked!: string[];
+usersDisliked!: string[];
 }
