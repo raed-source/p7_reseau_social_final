@@ -14,14 +14,14 @@ export class AuthService {
   isAuth$ = new BehaviorSubject<boolean>(false);
   private authToken = '';
   private userId = '';
-
+  private isAdmin=false;
 // userUrl ='http://localhost:3000/api/user';
 
 
   constructor(private httpClient:HttpClient, private router: Router) { }
 
   createUser(email: string, password: string,firstname:string, lastname:string) {
-    return this.httpClient.post<{ message: string }>('http://localhost:5000/api/auth/signup', {email: email, password: password, firstName:firstname,lastName:lastname},{withCredentials:true});
+    return this.httpClient.post<{ message: string }>('http://localhost:3000/api/auth/signup', {email: email, password: password, firstName:firstname,lastName:lastname},{withCredentials:true});
   }
 
 //   public createUser(user:User): Observable<User>{
@@ -36,11 +36,16 @@ getToken() {
 getUserId() {
   return this.userId;
 }
+getAdmin() {
+  return this.isAdmin;
+}
 loginUser(email: string, password: string) {
-  return this.httpClient.post<{ userId: string, token: string }>('http://localhost:3000/api/auth/login', {email: email, password: password}).pipe(
-    tap(({ userId, token }) => {
+  return this.httpClient.post<{ userId: string,isAdmin:boolean, token: string }>('http://localhost:3000/api/auth/login', {email: email, password: password}).pipe(
+    tap(({ userId,isAdmin, token }) => {
+      console.log(isAdmin, userId);
       this.userId = userId;
       this.authToken = token;
+      this.isAdmin=isAdmin;
       this.isAuth$.next(true);
     })
   );

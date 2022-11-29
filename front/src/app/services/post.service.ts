@@ -41,7 +41,7 @@ getPostById(id:any) {
 }
 // ************************************************************************
 
-likePost(id: number, like: boolean) {
+likePost(id: string, like: boolean) {
   let token= this.auth.getToken();
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
@@ -54,7 +54,7 @@ likePost(id: number, like: boolean) {
     catchError(error => throwError(error.error.message))
   );
 }
-dislikePost(id: number, dislike: boolean) {
+dislikePost(id: string, dislike: boolean) {
   let token= this.auth.getToken();
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
@@ -81,7 +81,7 @@ dislikePost(id: number, dislike: boolean) {
 // }
 // ********************************************************************
 
-disLikedById(id: number, dislikeType:string): void {
+disLikedById(id: string, dislikeType:string): void {
   const post = this.getPostById(id).pipe(
     map(post=>({
       ...post,
@@ -114,7 +114,7 @@ disLikedById(id: number, dislikeType:string): void {
         );
       }
       // ************************************************
-      deletePost(id: number) {
+      deletePost(id: string) {
         let token= this.auth.getToken();
         const headers = new HttpHeaders({
           'Authorization': `Bearer ${token}`,
@@ -125,7 +125,7 @@ disLikedById(id: number, dislikeType:string): void {
         );
       }
       // **************************************************************
-       modifyPost(id: number, post: Post, imgUrl: string | File) {
+       modifyPost(id: string, post: Post, imgUrl: string | File) {
         let token= this.auth.getToken();
         const headers = new HttpHeaders({
            'Authorization': `Bearer ${token}`,

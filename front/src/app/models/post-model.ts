@@ -1,10 +1,10 @@
 export class Post {
-_id!:number;
+_id!:string;
 userId!:string;
 title!: string;
 content!: string;
 imgUrl?:string
-dateCreate!: Date;
+createdAt!: Date;
 // like?: string;
 // dislike?: string;
 location?:string;

@@ -10,7 +10,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./single-post.component.scss']
 })
 export class SinglePostComponent implements OnInit {
+  adminId!:string;
   userId!:string;
+  isAdmin!:boolean;
   post$!:Observable<Post>
   buttonText!:string;
   loading!: boolean;
@@ -24,6 +26,7 @@ export class SinglePostComponent implements OnInit {
 
     ngOnInit(): void {
       this.userId=this.auth.getUserId();
+      this.isAdmin=this.auth.getAdmin();
       this.loading = true;
       this.post$ = this.route.params.pipe(
         map(params => params['id']),
