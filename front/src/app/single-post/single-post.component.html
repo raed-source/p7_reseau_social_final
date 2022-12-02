@@ -32,10 +32,10 @@
   <div class="like-pending" *ngIf="likePending">
     <mat-spinner class="white-spinner"></mat-spinner>
   </div>
-  <button (click)="onModify()" *ngIf="userId === post.userId || isAdmin">
+  <button class="btn btn-primary" color="primary" (click)="onModify()" *ngIf="userId === post.userId || isAdmin">
     Modify
   </button>
-  <button (click)="onDelete()" *ngIf="userId === post.userId || isAdmin">
+  <button class="btn btn-primary" color="primary" (click)="onDelete()" *ngIf="userId === post.userId || isAdmin">
     Delete
   </button>
 </div>
