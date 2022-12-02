@@ -19,7 +19,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AuthGuard } from './services/auth-guard.service';
 import { ModifyPostComponent } from './modify-post/modify-post.component';
 
-
+import {MatIconModule} from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -43,7 +43,9 @@ import { ModifyPostComponent } from './modify-post/modify-post.component';
     MatProgressSpinnerModule,
     MatButtonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
+    
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

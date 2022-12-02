@@ -16,6 +16,6 @@
     <label for="password">Mot de pass</label>
     <input type="password" class="form-control" id="password" formControlName="password">
   </div>
-  <button class="btn btn-primary" color="primary" [disabled]="signupForm.invalid" (click)="onSignup()">SIGN UP</button>
+  <button class="btn btn-primary" color="primary" [disabled]="signupForm.invalid" (click)="onSignup()">Signup</button>
   <p class="text-danger" *ngIf="errorMsg">{{ errorMsg }}</p>
 </form>

@@ -30,31 +30,11 @@ export class NewPostComponent implements OnInit {
 
 // *****************************************************
   ngOnInit(): void {
-//     this.urlRegex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/;
-//     this.postForm = this.formBuilder.group({
-//         title: [null,[Validators.required]],
-//         content: [null,[Validators.required]],
-//         imgUrl: [null,[Validators.required, Validators.pattern(this.urlRegex)]],
-//         location: [null,[Validators.required]]
-//     }, {
-//       updateOn: 'blur'
-//   });
-//     this.postPreview$= this.postForm.valueChanges.pipe(
-//       map(formValue => ({
-//           ...formValue,
-//           dateCreate: new Date(),
-//           like: "",
-//           dislike:"",
-//           id: 0
-//       }))
-//   );
-// }
-// ************************************************************************************
-
-
-this.loading = true;
-this.route.params.pipe(
-  switchMap(params => {
+    
+    
+    this.loading = true;
+    this.route.params.pipe(
+      switchMap(params => {
     if (!params['id']) {
       this.mode = 'new';
       this.initEmptyForm();
@@ -73,17 +53,17 @@ this.route.params.pipe(
     }
   }),
   catchError(error => this.errorMsg = JSON.stringify(error))
-).subscribe();
+  ).subscribe();
 }
 
 initEmptyForm() {
-this.postForm = this.formBuilder.group({
-  title: [null, Validators.required],
-  content: [null, Validators.required],
-  imgUrl: [null],
-  location:[null]
-});
-
+  this.postForm = this.formBuilder.group({
+    title: [null, Validators.required],
+    content: [null, Validators.required],
+    imgUrl: [null],
+    location:[null]
+  });
+  
 }
 initModifyForm(post: Post) {
   this.postForm = this.formBuilder.group({
@@ -104,7 +84,7 @@ onSubmitForm() {
   newPost.content=this.postForm.get('content')!.value;
   newPost.imgUrl=this.postForm.get('imgUrl')!.value;
   newPost.location=this.postForm.get('location')!.value;
-
+  
   // newPost.dateCreate=this.postForm.get('dateCreat')!.value;
   newPost.userId = this.auth.getUserId();
   console.log(newPost);
@@ -122,7 +102,7 @@ onSubmitForm() {
         this.errorMsg = error.message;
         return EMPTY;
       })
-    ).subscribe();
+      ).subscribe();
     }
     else if (this.mode === 'edit')
     {
@@ -138,24 +118,45 @@ onSubmitForm() {
           this.errorMsg = error.message;
           return EMPTY;
         })
-      ).subscribe();
-    }
-
-    // console.log(this.postForm.value);
-    // // this.postService.addPost(this.postForm.value);
-    // // this.router.navigateByUrl('/posts');
-    // const newPost= new Post;
-    // newPost.title=this.postForm.get('title')!.value;
-    // newPost.content=this.postForm.get('content')!.value;
+        ).subscribe();
+      }
+      
+      // console.log(this.postForm.value);
+      // // this.postService.addPost(this.postForm.value);
+      // // this.router.navigateByUrl('/posts');
+      // const newPost= new Post;
+      // newPost.title=this.postForm.get('title')!.value;
+      // newPost.content=this.postForm.get('content')!.value;
     // newPost.location=this.postForm.get('title')!.value;
     // newPost.imgUrl=this.postForm.get('imgUrl')!.value;
 
     // this.postService.createPost(newPost,this)
-
+    
     // this.postService.addPost(this.postForm.value).pipe(
-    //   tap(()=>this.router.navigateByUrl('/posts'))
-    // ).subscribe();
-
-
-}
-}
+      //   tap(()=>this.router.navigateByUrl('/posts'))
+      // ).subscribe();
+      
+      
+    }
+  }
+  
+  //     this.urlRegex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/;
+  //     this.postForm = this.formBuilder.group({
+  //         title: [null,[Validators.required]],
+  //         content: [null,[Validators.required]],
+  //         imgUrl: [null,[Validators.required, Validators.pattern(this.urlRegex)]],
+  //         location: [null,[Validators.required]]
+  //     }, {
+  //       updateOn: 'blur'
+  //   });
+  //     this.postPreview$= this.postForm.valueChanges.pipe(
+  //       map(formValue => ({
+  //           ...formValue,
+  //           dateCreate: new Date(),
+  //           like: "",
+  //           dislike:"",
+  //           id: 0
+  //       }))
+  //   );
+  // }
+  // ************************************************************************************
