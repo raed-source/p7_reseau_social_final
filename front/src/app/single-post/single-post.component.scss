@@ -68,3 +68,7 @@ button{
 .disliked {
   color: rgba(219, 51, 0, 1);
 }
+@media( max-width:300px){
+  .post-card {
+    width: 100%;}
+}
