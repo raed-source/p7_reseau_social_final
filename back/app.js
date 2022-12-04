@@ -3,9 +3,8 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-require('dotenv').config({
-    path: './config/.env'
-});
+
+require('dotenv').config();
 
 const app = express();
 const userRoute = require('./routers/user.route');
@@ -16,7 +15,7 @@ const post = require('./models/postModel')
 
 // ********************************************************************************
 // mongodb://localhost:27017/oc'
-mongoose.connect('mongodb+srv://p7:p7@cluster0.zavdmbw.mongodb.net/p7?retryWrites=true&w=majority', {
+mongoose.connect(`mongodb+srv://${process.env.USER_DB}:${process.env.MDP}@${process.env.DB_CLUSTER}/?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
