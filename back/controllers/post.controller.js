@@ -39,9 +39,10 @@ exports.createPost = (req, res, next) => {
     delete postObject._id;
     const post = new Post({
         ...postObject,
-        like: "",
-        dislike: "",
-      
+        likes: 0,
+        dislikes: 0,
+        usersLiked:[],
+        usersDisliked:[]
     });
     post.save()
         .then(() => { res.status(201).json({ message: 'Objet enregistré !' }) })
