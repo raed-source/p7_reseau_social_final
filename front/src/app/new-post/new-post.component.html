@@ -12,10 +12,9 @@
       </textarea>
     </div>
     <div class="form-group">
+      <button (click)="imageInput.click()">+</button>
       <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
       <img [src]="imagePreview" *ngIf="imagePreview" style="max-height: 100px;display:block;margin-top:10px">
-      <button (click)="imageInput.click()">+</button>
-
     </div>
     <div class="form-group">
       <label for="location">Lieu</label>
