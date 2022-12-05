@@ -1,7 +1,7 @@
 <mat-spinner *ngIf="loading"></mat-spinner>
 
-<div class="post-car">
-  <form [formGroup]="postForm">
+<div class="post-card">
+  <form [formGroup]="postForm" *ngIf="!loading">
     <div class="form-group">
       <label for="title">Titre</label>
       <input id="title" type="text" formControlName="title" class="form-control" />
@@ -12,29 +12,33 @@
       </textarea>
     </div>
     <div class="form-group">
-      <label for="imgUrl">URL de l'image</label>
-      <input class="formControl" id="imgUrl" type="text" formControlName="imgUrl" class="form-control" />
+      <button (click)="imageInput.click()">+</button>
+      <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
+      <img [src]="imagePreview" *ngIf="imagePreview" style="max-height: 100px;display:block;margin-top:10px">
     </div>
     <div class="form-group">
       <label for="location">Lieu</label>
       <input id="location" type="text" formControlName="location" class="form-control" />
     </div>
-    <!-- <div class="form-group">
-      <label for="dateCreate">Date</label>
-      <input id="dateCreate" type="date" />
-    </div> -->
-    <div class="action-buttons">
-      <button class="btn btn-primary" color="primary" type="submit" [disabled]="postForm.invalid"
-        (click)="onSubmitForm()">
-        Save
-      </button>
-    </div>
+
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="postForm.invalid">SUBMIT</button>
+
   </form>
 </div>
-<div class="post-card" *ngIf="postPreview$ | async as post">
+<!-- <div class="post-card" *ngIf="postPreview$ | async as post">
   <h2>{{ post.title | uppercase }}</h2>
   <p>Mis en ligne {{ post.createdAt | date: "à HH:mm, le d MMMM yyyy" }}</p>
   <img [src]="post.imgUrl" [alt]="post.title" />
   <p>{{ post.content }}</p>
   <p *ngIf="post.location">Photo prise à {{ post.location }}</p>
-</div>
+</div> -->
+<!-- <div class="form-group">
+  <button (click)="imageInput.click()">+</button>
+  <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
+
+  <img [src]="imagePreview" *ngIf="imagePreview" style="max-height: 100px;display:block;margin-top:10px">
+</div> -->
+<!-- <div class="form-group">
+  <label for="imgUrl">URL de l'image</label>
+  <input class="formControl" id="imgUrl" type="text" formControlName="imgUrl" class="form-control" />
+</div> -->

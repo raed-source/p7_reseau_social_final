@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../../front/src/app/modify-post/modify-post.component.scss"
+    ],
+    "names": [],
+    "file": "modify-post.component.min.css"
+}

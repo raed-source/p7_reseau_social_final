@@ -1,15 +1,13 @@
+import{Comment} from './comment-model';
 export class Post {
 _id!:string;
 userId!:string;
 title!: string;
 content!: string;
-imgUrl?:string
+imgUrl!:string
 createdAt!: Date;
-// like?: string;
-// dislike?: string;
 location?:string;
-// likes!:number;
-comments?:[];
+comments!: Comment[];
 likes!: number;
 dislikes!: number;
 usersLiked!: string[];

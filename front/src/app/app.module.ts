@@ -19,7 +19,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AuthGuard } from './services/auth-guard.service';
 import { ModifyPostComponent } from './modify-post/modify-post.component';
 
-import {MatIconModule} from '@angular/material/icon'
+import {MatIconModule} from '@angular/material/icon';
+import { CommentComponent } from './comment/comment.component'
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {MatIconModule} from '@angular/material/icon'
     SinglePostComponent,
     NewPostComponent,
     ModifyPostComponent,
+    CommentComponent,
     // Post
   ],
   imports: [

@@ -67,18 +67,7 @@ dislikePost(id: string, dislike: boolean) {
     catchError(error => throwError(error.error.message))
   );
 }
-// }
-// likedPostById(id: number, likeType:string){
-// //   const post = this.getPostById(id); // à remplacer par un Observable
-// //  likeType==='Like'?post.like='Ok':post.like='';
-//   return this.getPostById(id).pipe(
-//     map(post=>({
-//       ...post,
-//       like:likeType==='Like'?'ok':''
-//     })),
-//     switchMap(updatePost=>this.http.put<Post>(`http://localhost:3000/posts/${id}`,updatePost))
-//   )
-// }
+
 // ********************************************************************
 
 disLikedById(id: string, dislikeType:string): void {
@@ -92,24 +81,20 @@ disLikedById(id: string, dislikeType:string): void {
   );
   }
 
-// ****************************************************************************
-// const post = this.posts.find(post => post.id === id);
-// if (post) {
-  //     post.like='';
-  // } else {
-    //     throw new Error('Post not found!');
-    // }
+
     
     // ********************************************************************
-    createPost(post: Post) {
+    createPost(post: Post, image: File) {
       let token= this.auth.getToken();
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        // 'Content-Type': 'multipart/form-data'
       });
       const formData = new FormData();
       formData.append('post', JSON.stringify(post));
-      return this.http.post<{ message: string }>('http://localhost:3000/api/posts', post,{headers:headers}).pipe(
+      formData.append('image', image);
+// remplacer post par formData
+      return this.http.post<{ message: string }>('http://localhost:3000/api/posts', formData,{headers:headers}).pipe(
         catchError(error => throwError(error.error.message))
         );
       }
@@ -138,36 +123,16 @@ disLikedById(id: string, dislikeType:string): void {
     } else {
       const formData = new FormData();
       formData.append('post', JSON.stringify(post));
-      formData.append('imgUrl', imgUrl);
+      formData.append('image', imgUrl);
       return this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, formData,{headers:headers}).pipe(
         catchError(error => throwError(error.error.message))
       );
     }
   }
-      
-      // addPost(formValue:{ title: string, content: string, imgUrl: string, location?: string }):Observable<Post>{
-        //   return this.getAllPosts().pipe(
-          //     map(posts=>[...posts].sort((a:Post,b:Post)=>a.id-b.id)),
-          //     map(sortedPosts=>sortedPosts[sortedPosts.length-1]),
-          //     map(previousPost=>({
-//       ...formValue,
-//       like:'',
-//       dateCreat:new Date(),
-//       id:previousPost.id+1
-//     })),
-//     switchMap(newPost=>this.http.post<Post>('http://localhost:3000/posts',newPost))
-//   )
-// const post:Post={
-//   ...formValue,
-//   dateCreate:new Date,
-//   like:'0',
-//   dislike:'0',
-//   id:this.posts[this.posts.length-1].id+1,
-//   userId : this.auth.getUserId()
-
-// }
-// this.posts.push(post);
-// }
+  addNewComment(postCommented: { comment: string, postId: string }) {
+    console.log(postCommented);
+}
+    
 
 
 }

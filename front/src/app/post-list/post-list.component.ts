@@ -30,10 +30,10 @@ export class PostListComponent implements OnInit {
     );
     this.postService.getAllPosts();
         }
-
-  //  onViewPost(id:number) {           
-  //   this.router.navigate(['post', Number(id)]);
-  //         }
+ onPostCommented(postCommented: { comment: string, postId: string }) {
+          this.postService.addNewComment(postCommented);
+      }
+ 
 
 }
 

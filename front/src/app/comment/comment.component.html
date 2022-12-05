@@ -1,0 +1,18 @@
+<div class="comments-row">
+
+    <input type="text" id="comment" matInput placeholder="Laissez un commentaire…" [formControl]="commentCtrl">
+    <button mat-icon-button color="primary" (click)="onLeaveComment()">
+        <mat-icon>send</mat-icon>
+    </button>
+</div>
+
+<div *ngIf="comments.length">
+    <!-- etc -->
+    <div *ngIf="comments.length">
+        <h2 matSubheader>Commentaires</h2>
+        <div *ngFor="let comment of comments">
+            <span mat-line>{{ comment.comment }}</span>
+            <span mat-line>{{ comment.createdDate | date }}</span>
+        </div>
+    </div>
+</div>

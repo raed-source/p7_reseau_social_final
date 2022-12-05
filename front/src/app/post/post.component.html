@@ -13,5 +13,6 @@
 <div class="post-card" [ngClass]="{ liked: buttonText === 'DisLike' }">
   <h2>{{ post.title }}</h2>
   <p>{{ post.content }}</p>
+
   <button class="btn btn-primary" color="primar" (click)=" onViewPost()">View</button>
 </div>

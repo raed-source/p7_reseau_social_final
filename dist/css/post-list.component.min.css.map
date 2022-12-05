@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,AAAC,CACV,UAAU,CAAE,MAAM,CAClB,MAAM,CAAE,QAAQ,CACjB",
+    "sources": [
+        "../../front/src/app/post-list/post-list.component.scss"
+    ],
+    "names": [],
+    "file": "post-list.component.min.css"
+}

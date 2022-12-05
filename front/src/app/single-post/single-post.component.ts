@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../models/post-model';
@@ -10,6 +10,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./single-post.component.scss']
 })
 export class SinglePostComponent implements OnInit {
+@Input() post!:Post;
+@Output() postCommented = new EventEmitter<{ comment: string, postId: string }>();
+
   adminId!:string;
   userId!:string;
   isAdmin!:boolean;
@@ -23,7 +26,7 @@ export class SinglePostComponent implements OnInit {
   constructor(private postService: PostService,
     private route: ActivatedRoute, private router:Router,private auth:AuthService) { }
 
-
+// *******************************************************************************
     ngOnInit(): void {
       this.userId=this.auth.getUserId();
       this.isAdmin=this.auth.getAdmin();
@@ -104,25 +107,9 @@ onDislike(){
     )),
   ).subscribe();
 }
+onNewComment(comment:string){
+this.postCommented.emit({comment,postId:this.post._id});
 
-// method like*****************************
-// liked(id:number){
-//   if(this.buttonText==='DisLike'){
-//     this.postService.likedPostById(id, 'DisLike').pipe(
-//       tap(()=>{
-//         this.post$=this.postService.getPostById(id);
-//         this.buttonText='Like';
-//       })
-//     ).subscribe();
-//   }else{
-//     this.postService.likedPostById(id, 'Like').pipe(
-//       tap(()=>{
-//         this.post$=this.postService.getPostById(id);
-//         this.buttonText='DisLike'
-//       })
-//     ).subscribe();
-//     this.buttonText='DisLike';
+}
 
-//   }
-// }
 }

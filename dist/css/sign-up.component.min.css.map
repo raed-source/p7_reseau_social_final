@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,IAAI,AAAC,CACH,MAAM,CAAE,QAAQ,CAChB,SAAS,CAAE,KAAK,CACjB,AACD,AAAA,MAAM,AAAA,CACJ,UAAU,CAAE,IAAI,CACjB",
+    "sources": [
+        "../../front/src/app/auth/sign-up/sign-up.component.scss"
+    ],
+    "names": [],
+    "file": "sign-up.component.min.css"
+}

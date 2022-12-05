@@ -32,6 +32,13 @@
   <div class="like-pending" *ngIf="likePending">
     <mat-spinner class="white-spinner"></mat-spinner>
   </div>
+  <div class="
+  ">
+    commentes: {{post.comments}}</div>
+
+  <div class="post-card">
+    <app-comment [comments]="post.comments" (newComment)="onNewComment($event)"></app-comment>
+  </div>
   <button class="btn btn-primary" color="primary" (click)="onModify()" *ngIf="userId === post.userId || isAdmin">
     Modify
   </button>
