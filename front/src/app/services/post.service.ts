@@ -98,6 +98,30 @@ disLikedById(id: string, dislikeType:string): void {
         catchError(error => throwError(error.error.message))
         );
       }
+      // **************************************************************
+       modifyPost(id: string, post: Post, image: string | File) {
+        let token= this.auth.getToken();
+        const headers = new HttpHeaders({
+           'Authorization': `Bearer ${token}`,
+          // 'Content-Type': 'application/json'
+        });
+    if (typeof image === 'string') {
+      return this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, post,{headers:headers}).pipe(
+        catchError(error => throwError(error.error.message))
+      );
+    } else {
+      const formData = new FormData();
+      formData.append('post', JSON.stringify(post));
+      formData.append('image', image);
+      return this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, formData,{headers:headers}).pipe(
+        catchError(error => throwError(error.error.message))
+      );
+    }
+  }
+  addNewComment(postCommented: { comment: string, postId: string }) {
+    console.log(postCommented);
+}
+    
       // ************************************************
       deletePost(id: string) {
         let token= this.auth.getToken();
@@ -109,30 +133,5 @@ disLikedById(id: string, dislikeType:string): void {
           catchError(error => throwError(error.error.message))
         );
       }
-      // **************************************************************
-       modifyPost(id: string, post: Post, imgUrl: string | File) {
-        let token= this.auth.getToken();
-        const headers = new HttpHeaders({
-           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        });
-    if (typeof imgUrl === 'string') {
-      return this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, post,{headers:headers}).pipe(
-        catchError(error => throwError(error.error.message))
-      );
-    } else {
-      const formData = new FormData();
-      formData.append('post', JSON.stringify(post));
-      formData.append('image', imgUrl);
-      return this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, formData,{headers:headers}).pipe(
-        catchError(error => throwError(error.error.message))
-      );
-    }
-  }
-  addNewComment(postCommented: { comment: string, postId: string }) {
-    console.log(postCommented);
-}
-    
-
 
 }

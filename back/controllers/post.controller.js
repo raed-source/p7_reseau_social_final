@@ -1,8 +1,9 @@
 const { json } = require('express');
+const fs = require('fs');
 const Post = require('../models/postModel');
 
 
-//
+//************************* */
 exports.getAllPosts = (req, res, next) => {
     Post.find().sort({createdAt:-1}).then(
         (posts) => {
@@ -53,46 +54,25 @@ exports.createPost = (req, res, next) => {
         .catch(error => { res.status(400).json({ error }) })
 };
 
-
-
-
-exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
-        .then((post) => {
-            if (post.userId != req.auth.userId) {
-                res.status(401).json({ message: 'Not authorized' });
-            } else {
-                console.log(post.id);
-                const filename = post.imgUrl.split('/images/')[1];
-                fs.unlink(`images/${filename}`, () => {
-                    Post.deleteOne({ _id: req.params.id })
-                        .then(() => { res.status(200).json({ message: 'Objet supprimé !' }) })
-                        .catch(error => res.status(401).json({ error }));
-                });
-            }
-        })
-        .catch(error => {
-            res.status(500).json({ error });
-        });
-};
-
 // ----------------------MODIFY LE post------------------------------
 exports.modifyPost = (req, res, next) => {
 
     console.log('modifier posts');
+    // console.log('imag '+ req.file.filename);
     const postObject = req.file ? {
       ...JSON.parse(req.body.post),
-    //   imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body };
+      imgUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    } : { ...JSON.parse(req.body.post) };
+    console.log('image', req.file?.filename)
     console.log(postObject);
     console.log(req.auth.userId);
     if (postObject.userId !== req.auth.userId) {
       return res.status(401).json({ error: new Error('Vous ne pouvez pas modifier cette post') })
     }
-    Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+    Post.findOneAndUpdate({ _id: req.params.id }, { ...postObject})
       .then(
-        () => {
-          console.log('Post modifié !');
+        (post) => {
+          console.log('Post modifié !', post);
           res.status(200).json({
             message: 'Post updated successfully!'
           });
@@ -105,6 +85,31 @@ exports.modifyPost = (req, res, next) => {
         }
       );
   };
+  // ********************************************
+  
+exports.deletePost = (req, res, next) => {
+  Post.findOne({ _id: req.params.id })
+      .then((post) => {
+          if (post.userId != req.auth.userId) {
+              res.status(401).json({ message: 'Not authorized' });
+          } else {
+              console.log(post.id);
+              const filename = post.imgUrl.split('/images/')[1];
+              fs.unlink(`images/${filename}`, () => {
+                  Post.deleteOne({ _id: req.params.id })
+                      .then(() => {console.log('Objet supprimé !');
+                         res.status(200).json({ message: 'Objet supprimé !' }) })
+                         .catch(error => {
+                          console.log(error)
+                          res.status(400).json({ error })
+                       });              });
+          }
+      })
+      .catch(error => {
+        console.log(error);
+          res.status(500).json({ message:error });
+      });
+};
 
 //   ***********like methode*********************
 exports.likePost = (req, res, next) => {

@@ -13,9 +13,8 @@ const routes: Routes = [
   {path:'signup',component:SignUpComponent},
   {path:'login' ,component:LogInComponent},
   // {path:'posts/:id', component:PostComponent, canActivate: [AuthGuard]},
-  {path:'posts/:id', component:SinglePostComponent, canActivate: [AuthGuard]},
   { path:'posts',component:PostListComponent, canActivate: [AuthGuard]},
-  
+  {path:'posts/:id', component:SinglePostComponent, canActivate: [AuthGuard]},
   { path: 'create', component: NewPostComponent, canActivate: [AuthGuard]},
   { path: 'modify-post/:id', component: NewPostComponent, canActivate: [AuthGuard] },
   {  path:'',component:HomeComponent}, 

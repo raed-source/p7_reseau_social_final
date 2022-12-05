@@ -35,6 +35,7 @@ export class SinglePostComponent implements OnInit {
         map(params => params['id']),
         switchMap(id => this.postService.getPostById(id)),
         tap(post => {
+          console.log(post);
           this.loading = false;
           if (post.usersLiked.find(user => user === this.userId)) {
             this.liked = true;
