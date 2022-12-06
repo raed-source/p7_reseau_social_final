@@ -16,9 +16,10 @@
       <input id="location" type="text" formControlName="location" class="form-control" />
     </div>
     <div class="form-group">
-      <button (click)="imageInput.click()">+</button>
-      <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
-      <img [src]="imagePreview" *ngIf="imagePreview" style="max-height: 100px;display:block;margin-top:10px">
+      <p><button (click)="imageInput.click()">image</button></p>
+      <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)" placeholder="">
+      <img class="imagePreview" [src]="imagePreview" *ngIf="imagePreview"
+        style="max-height: 100px;display:block;margin-top:10px; margin-left: 10px;">
     </div>
 
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { BehaviorSubject, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -10,13 +9,10 @@ import { Router } from '@angular/router';
 })
 
 export class AuthService {
-
   isAuth$ = new BehaviorSubject<boolean>(false);
   private authToken = '';
   private userId = '';
   private isAdmin=false;
-// userUrl ='http://localhost:3000/api/user';
-
 
   constructor(private httpClient:HttpClient, private router: Router) { }
 
@@ -24,18 +20,15 @@ export class AuthService {
     return this.httpClient.post<{ message: string }>('http://localhost:3000/api/auth/signup', {email: email, password: password, firstName:firstname,lastName:lastname},{withCredentials:true});
   }
 
-//   public createUser(user:User): Observable<User>{
-//     return this.httpClient.post(`${this.userUrl}/signup`, user, { withCredentials: true, observe: 'response' })
-//     .pipe(catchError(err => {
-//       return of(err);
-//     }));
-// }
+// *********************************************
 getToken() {
   return this.authToken;
 }
+// ***************************************************
 getUserId() {
   return this.userId;
 }
+// *************************************************************
 getAdmin() {
   return this.isAdmin;
 }
