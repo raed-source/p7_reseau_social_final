@@ -1,18 +1,20 @@
 <button><a routerLink="/posts">
     <mat-icon>undo</mat-icon>
   </a></button>
-<div class="post-card" *ngIf="post$ | async as post" [ngClass]="{ liked: buttonText === 'DisLike' }">
-  <img [src]="post.imgUrl" [alt]="post.title" />
+<div class="post-card" *ngIf="post$ | async as post">
   <h2>{{ post.title | uppercase }}</h2>
+  <img [src]="post.imgUrl" [alt]="post.title" />
+
   <p class="card-text">{{ post.content }}</p>
   <!-- <p>{{ post.dislike }}</p> -->
-  <p>{{ post.createdAt | date: "à HH:mm, le d MMMM yyyy" }}</p>
 
-  <span>{{ post.likes }}</span>
+
+
   <p *ngIf="post.location">
     <span>{{ post.location }}</span>
   </p>
-  <p>{{ post.createdAt }}</p>
+  <p>{{ post.createdAt | date: "à HH:mm, le d MMMM yyyy" }}</p>
+
   <!-- -----------like button--------------- -->
   <div class="like-buttons" *ngIf="!likePending">
     <div class="likes">
@@ -34,15 +36,19 @@
   </div>
   <div class="
   ">
-    commentes: {{post.comments}}</div>
+    <p><span>Liked : {{ post.likes }} times</span></p>
 
-  <div class="post-card">
-    <app-comment [comments]="post.comments" (newComment)="onNewComment($event)"></app-comment>
   </div>
+  <!-- ----------------------pour developper ----------------- -->
+  <!-- <div class="post-card">
+    commentes: {{post.comments}}
+    <app-comment [comments]="post.comments" (newComment)="onNewComment($event)"></app-comment>
+  </div> -->
   <button class="btn btn-primary" color="primary" (click)="onModify()" *ngIf="userId === post.userId || isAdmin">
     Modify
   </button>
   <button class="btn btn-primary" color="primary" (click)="onDelete()" *ngIf="userId === post.userId || isAdmin">
     Delete
   </button>
+
 </div>
